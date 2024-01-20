@@ -138,3 +138,27 @@ This makes the `StandaloneComponent` the first component to be loaded by the bro
 
 Standalone components, directives, and pipes in Angular represent a shift towards a more flexible and decoupled approach in application development, simplifying the architecture and potentially enhancing the maintainability and scalability of Angular applications.
 
+## BootstrapApplication
+`bootstrapApplication` is a function in Angular that allows bootstrapping an application using a Standalone Component, without any dependency on an Angular module. This means that once the application is booted using the `bootstrapApplication` function with a standalone component, the dependency on `AppModule` is eliminated, making this file redundant and removable.
+
+Application-wide providers, routes, and preloading strategies can also be added via the `bootstrapApplication` function. For example:
+```javascript
+bootstrapApplication(AppComponent, {
+  providers: [
+    {provide: "url", useValue: "https://www.google.com"},
+    provideRouter([
+      {path: "", component: HomeComponent},
+      {path: "about", component: AboutComponent},
+      {path: "products", component: ProductComponent}
+    ], withPreloading(PreloadAllModules))
+  ]
+})
+```
+This example demonstrates adding global providers and configuring routing and preloading strategies directly in the `bootstrapApplication` function.
+
+## Router Inputs
+The Router Inputs feature allows easy and quick reading of data from various structures like Route & Query Parameters, Route Data Passing, and Resolve Guards. To utilize this feature, the application’s `Component Input Binding` needs to be enabled. 
+
+In applications using RouterModule, the `bindToComponentInputs` feature should be activated. In contrast, in standalone applications, the `withComponentInputBinding` configuration should be called.
+
+This functionality enhances the ease and efficiency of accessing routing-related data directly in components, streamlining the process of handling route parameters and other related data in Angular applications.
