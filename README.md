@@ -106,3 +106,35 @@ export class CustomPreloadingStrategy implements PreloadingStrategy {
 ```
 
 **Note:** To use this strategy, it must be added to the providers of the relevant module. This approach allows for more control over which modules are preloaded and when, optimizing the application's performance and user experience.
+
+## Standalone Component & Directive & Pipe
+In Angular, the standalone component structure helps to reduce modular dependencies in the application, facilitating a faster and easier development process.
+
+### Creating a Standalone Component
+Using Angular CLI:
+`ng g c components/standalone --standalone`
+
+Alternatively, you can add `standalone: true` to the `@Component` decorator of a standard component. In this version, you'll need to remove the component from the module.
+
+### Usage of Standalone Components
+- A standalone component must be imported into the module where it will be used.
+- To import a standalone component directly at the component level instead of the module level, both components involved need to be standalone.
+- To use modular structures in standalone components, the `imports` property inside the `@Component` decorator needs to define the necessary modules.
+
+### Lazy Loading in Standalone Structures
+In lazy loading processes, while modular structures are declared with `loadChildren`, standalone components, having no modules, must be declared using the `loadComponent` function.
+
+### Bootstrapping an Application with a Standalone Component
+To set up the main configuration of the application with a standalone component instead of in `app.module.ts`, the following steps should be taken:
+Modification in `main.ts`:
+```javascript
+//platformBrowserDynamic().bootstrapModule(AppModule)
+// .catch(err => console.error(err));
+
+bootstrapApplication(StandaloneComponent)
+```
+Then, add the `<app-standalone></app-standalone>` selector in `index.html`.
+This makes the `StandaloneComponent` the first component to be loaded by the browser. Consequently, `app.module.ts` becomes redundant.
+
+Standalone components, directives, and pipes in Angular represent a shift towards a more flexible and decoupled approach in application development, simplifying the architecture and potentially enhancing the maintainability and scalability of Angular applications.
+

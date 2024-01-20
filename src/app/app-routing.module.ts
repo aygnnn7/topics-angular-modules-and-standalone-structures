@@ -16,8 +16,11 @@ const routes: Routes = [
     data: {preload:true}},
   {path: "products", loadChildren: 
    () => import("../app/components/products/products.module").then(m=>m.ProductsModule), 
-   data: {preload: false}}
-   
+   data: {preload: false}},
+   {path: "standalone", loadComponent :
+    () => import("./components/standalone/standalone.component").then(m => m.StandaloneComponent)},
+     {path: "standalone2", loadComponent :
+    () => import("./components/standalone2/standalone2.component").then(m => m.Standalone2Component)}
 ];
 
 @NgModule({
