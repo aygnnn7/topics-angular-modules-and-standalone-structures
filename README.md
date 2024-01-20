@@ -54,7 +54,7 @@ Lazy loading is a technique that allows loading only the necessary components or
 
 If lazy loading is not manually implemented, Angular will load all components every time, leading to significant unnecessary performance loss.
 
-## Advantages of Lazy Loading:
+### Advantages of Lazy Loading:
 - Reduces initial loading time
 - Improves performance
 - Decreases resource usage on the client-side
@@ -75,3 +75,34 @@ imports: [
   ]
 ```
 
+## Preloading Strategy
+Preloading is a strategy that allows for the background loading of large and significant modules that the user is likely to use. This ensures that when the user needs to access these modules, they can do so without experiencing long waiting times. For preloading to be implemented, the Lazy Loading technique must already be in place.
+
+### Applying Preloading to a Module
+To implement preloading in your Angular application, you can specify a preloading strategy in the routing module. Here's an example of how to use the `PreloadAllModules` strategy, which preloads all lazy-loaded modules after the app has loaded:
+
+```javascript
+imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+```
+
+### Creating a Custom Preloading Strategy
+- Initially, core modules that are essential and can be used at any point in the application are directly loaded. For example, an authentication module.
+- Subsequently, frequently used modules are preloaded using the `Preloading` strategy.
+- Finally, the remaining modules are loaded using the `lazy loading` method.
+
+An example of a custom preload strategy using Route Data passing:
+```javascript
+export class CustomPreloadingStrategy implements PreloadingStrategy {
+    preload(route: Route, fn: () => Observable<any>): Observable<any> {
+        // customer - preloading: true,
+        // products - preloading: false
+
+        if (route.data["preload"] === true) {
+            return fn();
+        }
+        return of(null);
+    }
+}
+```
+
+**Note:** To use this strategy, it must be added to the providers of the relevant module. This approach allows for more control over which modules are preloaded and when, optimizing the application's performance and user experience.

@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomModule } from './custom/custom.module';
 import { HomeComponent } from './components/home/home.component';
+import { CustomPreloadingStrategy } from './strategies/custom-preloading-strategy';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { HomeComponent } from './components/home/home.component';
     AppRoutingModule,
     CustomModule
   ],
-  providers: [],
+  providers: [CustomPreloadingStrategy],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
